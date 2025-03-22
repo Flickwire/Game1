@@ -4,17 +4,23 @@ if arg[2] == "debug" then
   MODE_DEBUG = true
 end
 
+WORLD = nil
+
 function love.load()
-  local init = require('src.init')
-  init.go()
+  WORLD = require('src.world')
+  WORLD:init()
+  for _=1,20 do
+    WORLD:add_actor(require('src.actors.dancing_rect'):new())
+  end
+  WORLD:remove_actor({id=4})
 end
 
 function love.update()
-  Y = Y + 1
+  WORLD:update()
 end
 
 function love.draw()
-  love.graphics.print("Hello World", 400, Y)
+  WORLD:draw()
 end
 
 --Error Handler for debug
