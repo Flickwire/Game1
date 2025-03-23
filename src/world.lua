@@ -1,14 +1,16 @@
-local world = {
-  actors = {}
-}
+local world = {}
+
+function world:new()
+  local instance = {
+    actors = {}
+  }
+  setmetatable(instance, self)
+  self.__index = self
+  return instance
+end
 
 function world:init()
   math.randomseed(os.clock())
-  for _,actor in ipairs(self.actors) do
-    if (actor.init and type(actor.init) == "function") then
-      actor:init()
-    end
-  end
 end
 
 function world:update()
@@ -29,6 +31,9 @@ end
 
 function world:add_actor(actor)
   assert(actor.id ~= nil, "Failed to insert actor with unknown ID")
+  if (actor.init and type(actor.init) == "function") then
+    actor:init()
+  end
   table.insert(self.actors, actor)
   print(string.format("INFO: Inserted actor with ID %i", actor.id))
 end
@@ -36,8 +41,11 @@ end
 function world:remove_actor(actor)
   assert(actor.id ~= nil, "Failed to remove actor with unknown ID")
   for i, a in ipairs(self.actors) do
-    if a.id ~= actor.id then
+    if a.id == actor.id then
       table.remove(self.actors, i)
+      if (a.destroy and type(a.destroy) == "function") then
+        a:destroy()
+      end
       print(string.format("INFO: Removed actor with ID %i", actor.id))
       return
     end

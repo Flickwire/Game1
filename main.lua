@@ -7,7 +7,7 @@ end
 WORLD = nil
 
 function love.load()
-  WORLD = require('src.world')
+  WORLD = require('src.world'):new()
   WORLD:init()
   for _=1,20 do
     WORLD:add_actor(require('src.actors.dancing_rect'):new())
