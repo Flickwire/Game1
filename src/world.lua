@@ -11,7 +11,7 @@ end
 
 function world:init()
   math.randomseed(os.clock())
-  world.camera = require('lib.gamera.gamera').new(0, 0, 1000, 1000)
+  self.camera = require('lib.gamera.gamera').new(0, 0, 1000, 1000)
 end
 
 function world:update()
