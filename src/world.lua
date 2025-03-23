@@ -20,20 +20,6 @@ function world:update()
       actor:update()
     end
   end
-  local x, y = self.camera:getPosition()
-  if love.keyboard.isDown("w") then
-    y = y - 2
-  end
-  if love.keyboard.isDown("s") then
-    y = y + 2
-  end
-  if love.keyboard.isDown("a") then
-    x = x - 2
-  end
-  if love.keyboard.isDown("d") then
-    x = x + 2
-  end
-  self.camera:setPosition(x, y)
 end
 
 function world:draw()
@@ -49,7 +35,7 @@ end
 function world:add_actor(actor)
   assert(actor.id ~= nil, "Failed to insert actor with unknown ID")
   if (actor.init and type(actor.init) == "function") then
-    actor:init()
+    actor:init(self)
   end
   table.insert(self.actors, actor)
   print(string.format("INFO: Inserted actor with ID %i", actor.id))
