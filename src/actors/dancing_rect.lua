@@ -26,6 +26,7 @@ function dancing_rect:update()
 end
 
 function dancing_rect:draw()
+  love.graphics.setColor(0,0.2,1,0.8)
   love.graphics.rectangle("fill", self.pos.x, self.pos.y, 5, 5)
 end
 
