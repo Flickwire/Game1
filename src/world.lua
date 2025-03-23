@@ -11,6 +11,7 @@ end
 
 function world:init()
   math.randomseed(os.clock())
+  world.camera = require('lib.gamera.gamera').new(0, 0, 1000, 1000)
 end
 
 function world:update()
@@ -19,14 +20,30 @@ function world:update()
       actor:update()
     end
   end
+  local x, y = self.camera:getPosition()
+  if love.keyboard.isDown("w") then
+    y = y - 2
+  end
+  if love.keyboard.isDown("s") then
+    y = y + 2
+  end
+  if love.keyboard.isDown("a") then
+    x = x - 2
+  end
+  if love.keyboard.isDown("d") then
+    x = x + 2
+  end
+  self.camera:setPosition(x, y)
 end
 
 function world:draw()
-  for _,actor in ipairs(self.actors) do
-    if (actor.draw and type(actor.draw) == "function") then
-      actor:draw()
+  self.camera:draw(function(l,t,w,h)
+    for _,actor in ipairs(self.actors) do
+      if (actor.draw and type(actor.draw) == "function") then
+        actor:draw()
+      end
     end
-  end
+  end)
 end
 
 function world:add_actor(actor)

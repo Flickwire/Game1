@@ -9,10 +9,9 @@ WORLD = nil
 function love.load()
   WORLD = require('src.world'):new()
   WORLD:init()
-  for _=1,20 do
-    WORLD:add_actor(require('src.actors.dancing_rect'):new())
+  for _=1,200 do
+    WORLD:add_actor(require('src.actors.dancing_rect'):new({pos={x=math.random(0,1000),y=math.random(0,1000)}}))
   end
-  WORLD:remove_actor({id=4})
 end
 
 function love.update()

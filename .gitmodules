@@ -1,0 +1,3 @@
+[submodule "lib/gamera"]
+	path = lib/gamera
+	url = https://github.com/kikito/gamera.git
