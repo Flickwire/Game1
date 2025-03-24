@@ -7,6 +7,9 @@ end
 WORLD = nil
 
 function love.load()
+  if (MODE_DEBUG) then
+    require("lib.vudu.vudu").initialize()
+  end
   WORLD = require('src.world'):new()
   WORLD:init()
   for _=1,200 do

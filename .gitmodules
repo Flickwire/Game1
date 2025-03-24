@@ -1,3 +1,6 @@
 [submodule "lib/gamera"]
 	path = lib/gamera
 	url = https://github.com/kikito/gamera.git
+[submodule "lib/vudu"]
+	path = lib/vudu
+	url = https://github.com/deltadaedalus/vudu.git
