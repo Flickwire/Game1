@@ -13,12 +13,13 @@ function love.load()
   WORLD = require('src.world'):new()
   WORLD:init()
   for _=1,200 do
-    WORLD:add_actor(require('src.actors.dancing_rect'):new({pos={x=math.random(0,1000),y=math.random(0,1000)}}))
+    WORLD:add_actor(require('src.actors.dancing_rect'):new({pos={x=math.random(0,1000),y=math.random(0,1000)}, width=math.random(10,50), height=math.random(10,50)}))
   end
   WORLD:add_actor(require('src.actors.player'):new())
 end
 
 function love.update()
+  WORLD:add_actor(require('src.actors.dancing_rect'):new({pos={x=math.random(0,1000),y=math.random(0,1000)}, width=math.random(10,50), height=math.random(10,50)}))
   WORLD:update()
 end
 

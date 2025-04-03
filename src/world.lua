@@ -36,7 +36,7 @@ end
 
 function world:add_actor(actor)
   assert(actor.id ~= nil, "Failed to insert actor with unknown ID")
-  assert(self.actors[actor.id] == nil, string.format("ERROR: Actor ID collision (%s)", actor.id))
+  assert(self.actors[actor.id] == nil, string.format("Actor ID collision (%s)", actor.id))
   if (actor.init and type(actor.init) == "function") then
     actor:init(self)
   end

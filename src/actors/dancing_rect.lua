@@ -7,7 +7,9 @@ function dancing_rect:new(instance)
       pos = {
         x = math.random(0,500),
         y = math.random(0,500)
-      }
+      },
+      width = 25,
+      height = 25
     }
   end
   instance.id = next_id()
@@ -27,7 +29,7 @@ end
 
 function dancing_rect:draw()
   love.graphics.setColor(0,0.2,1,0.8)
-  love.graphics.rectangle("fill", self.pos.x, self.pos.y, 5, 5)
+  love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.width, self.height)
 end
 
 
