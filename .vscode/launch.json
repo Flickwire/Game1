@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Debug",
       "program": {
-        "command": "love"
+        "command": "lovec"
       },
       "args": [
         ".",
@@ -18,7 +18,7 @@
       "request": "launch",
       "name": "Release",
       "program": {
-        "command": "love"
+        "command": "lovec"
       },
       "args": [
         ".",
