@@ -7,7 +7,8 @@ function player:new(instance)
       pos = {
         x = 0,
         y = 0
-      }
+      },
+      speed = 100,
     }
   end
   instance.id = next_id()
@@ -21,18 +22,18 @@ function player:init(world)
   self.world = world
 end
 
-function player:update()
+function player:update(dt)
   if love.keyboard.isDown('w') then
-    self.pos.y = self.pos.y - 1
+    self.pos.y = self.pos.y - self.speed * dt
   end
   if love.keyboard.isDown('s') then
-    self.pos.y = self.pos.y + 1
+    self.pos.y = self.pos.y + self.speed * dt
   end
   if love.keyboard.isDown('a') then
-    self.pos.x = self.pos.x - 1
+    self.pos.x = self.pos.x - self.speed * dt
   end
   if love.keyboard.isDown('d') then
-    self.pos.x = self.pos.x + 1
+    self.pos.x = self.pos.x + self.speed * dt
   end
   self.world.camera:setPosition(self.pos.x, self.pos.y)
 end

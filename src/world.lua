@@ -1,3 +1,6 @@
+local player = require('src.actors.player')
+local dancing_rect = require('src.actors.dancing_rect')
+
 local world = {}
 
 function world:new()
@@ -20,9 +23,9 @@ function world:init()
   self.camera = require('lib.gamera.gamera').new(0, 0, self.width, self.height)
 end
 
-function world:update()
+function world:update(dt)
   for _,actor in pairs(self.updatables) do
-    actor:update()
+    actor:update(dt)
   end
 end
 

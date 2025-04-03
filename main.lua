@@ -18,9 +18,9 @@ function love.load()
   WORLD:add_actor(require('src.actors.player'):new())
 end
 
-function love.update()
+function love.update(dt)
   WORLD:add_actor(require('src.actors.dancing_rect'):new({pos={x=math.random(0,1000),y=math.random(0,1000)}, width=math.random(10,50), height=math.random(10,50)}))
-  WORLD:update()
+  WORLD:update(dt)
 end
 
 function love.draw()
@@ -30,6 +30,7 @@ end
 --Error Handler for debug
 local love_errorhandler = love.errorhandler
 
+---@param msg string
 function love.errorhandler(msg)
     if MODE_DEBUG then
         error(msg, 2)
