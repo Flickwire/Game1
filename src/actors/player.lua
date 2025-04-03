@@ -17,7 +17,7 @@ function player:new(instance)
 end
 
 function player:init(world)
-  print(string.format("INFO: Initializing player with ID %i", self.id))
+  print(string.format("INFO: Initializing player with ID %s", self.id))
   self.world = world
 end
 

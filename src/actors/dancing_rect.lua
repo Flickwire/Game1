@@ -17,7 +17,7 @@ function dancing_rect:new(instance)
 end
 
 function dancing_rect:init()
-  print(string.format("INFO: Initializing dancing_rect with ID %i", self.id))
+  print(string.format("INFO: Initializing dancing_rect with ID %s", self.id))
 end
 
 function dancing_rect:update()

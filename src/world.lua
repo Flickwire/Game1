@@ -15,7 +15,7 @@ function world:init()
 end
 
 function world:update()
-  for _,actor in ipairs(self.actors) do
+  for _,actor in pairs(self.actors) do
     if (actor.update and type(actor.update) == "function") then
       actor:update()
     end
@@ -24,7 +24,7 @@ end
 
 function world:draw()
   self.camera:draw(function(l,t,w,h)
-    for _,actor in ipairs(self.actors) do
+    for _,actor in pairs(self.actors) do
       if (actor.draw and type(actor.draw) == "function") then
         actor:draw()
       end
@@ -37,23 +37,21 @@ function world:add_actor(actor)
   if (actor.init and type(actor.init) == "function") then
     actor:init(self)
   end
-  table.insert(self.actors, actor)
-  print(string.format("INFO: Inserted actor with ID %i", actor.id))
+  self.actors[actor.id] = actor
+  print(string.format("INFO: Inserted actor with ID %s", actor.id))
 end
 
 function world:remove_actor(actor)
   assert(actor.id ~= nil, "Failed to remove actor with unknown ID")
-  for i, a in ipairs(self.actors) do
-    if a.id == actor.id then
-      table.remove(self.actors, i)
-      if (a.destroy and type(a.destroy) == "function") then
-        a:destroy()
-      end
-      print(string.format("INFO: Removed actor with ID %i", actor.id))
-      return
-    end
+  if (self.actors[actor.id] == nil) then
+    print(string.format("WARN: Actor with ID %s not found", actor.id))
+    return
   end
-  print(string.format("WARN: Could not find actor with ID %i to remove", actor.id))
+  if (actor.destroy and type(actor.destroy) == "function") then
+    actor:destroy()
+  end
+  self.actors[actor.id] = nil
+  print(string.format("INFO: Removed actor with ID %s", actor.id))
 end
 
 return world
