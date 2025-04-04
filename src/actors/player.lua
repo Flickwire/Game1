@@ -48,13 +48,14 @@ function player:handleInput(dt)
   if love.keyboard.isDown('s') then
     self.pos.y = self.pos.y + speed * dt
   end
+  resolve_collisions(self.world, self, pos_before, {'player_bullet', 'enemy_bullet', 'player'}, 'y')
   if love.keyboard.isDown('a') then
     self.pos.x = self.pos.x - speed * dt
   end
   if love.keyboard.isDown('d') then
     self.pos.x = self.pos.x + speed * dt
   end
-  resolve_collisions(self.world, self, pos_before, {'player_bullet', 'enemy_bullet', 'player'})
+  resolve_collisions(self.world, self, pos_before, {'player_bullet', 'enemy_bullet', 'player'}, 'x')
   local mouseX, mouseY = love.mouse.getPosition()
   local screenX, screenY = self.world.camera:toScreen(self.pos.x, self.pos.y)
   local dx = mouseX - screenX

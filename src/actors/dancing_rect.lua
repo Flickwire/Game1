@@ -30,8 +30,9 @@ end
 function dancing_rect:update()
   local pos_before = {x=self.pos.x, y=self.pos.y}
   self.pos.x = self.pos.x + math.random(-1,1)
+  resolve_collisions(self.world, self, pos_before, {'dancing_rect', 'player_bullet', 'enemy_bullet'}, 'x')
   self.pos.y = self.pos.y + math.random(-1,1)
-  resolve_collisions(self.world, self, pos_before, {'dancing_rect', 'player_bullet', 'enemy_bullet'})
+  resolve_collisions(self.world, self, pos_before, {'dancing_rect', 'player_bullet', 'enemy_bullet'}, 'y')
 end
 
 function dancing_rect:draw()
