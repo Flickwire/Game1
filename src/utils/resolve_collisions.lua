@@ -1,12 +1,22 @@
 local find_collisions = require('src.utils.find_collisions')
 
-local function resolve_collisions(world, actor, actor_pos_before)
+local function resolve_collisions(world, actor, actor_pos_before, ignore_types)
   if (actor_pos_before.x == actor.pos.x and
       actor_pos_before.y == actor.pos.y) then
     return
   end
   local collisions = find_collisions(world, actor)
   for _, other_actor in pairs(collisions) do
+    if other_actor.id == actor.id then
+      goto continue
+    end
+    if ignore_types then
+      for _, type in ipairs(ignore_types) do
+        if other_actor.type == type then
+          goto continue
+        end
+      end
+    end
     local actor_box = actor:getBoundingBox()
     local other_box = other_actor:getBoundingBox()
     if (actor_box.x1 < other_box.x2 and actor_box.x2 > other_box.x1 and
@@ -22,6 +32,7 @@ local function resolve_collisions(world, actor, actor_pos_before)
         actor.pos.y = other_box.y2
       end
     end
+    ::continue::
   end
 end
 return resolve_collisions

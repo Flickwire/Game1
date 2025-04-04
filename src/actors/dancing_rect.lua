@@ -1,5 +1,6 @@
 local dancing_rect = {}
 local next_id = require('src.utils.next_id')
+local resolve_collisions = require('src.utils.resolve_collisions')
 
 function dancing_rect:new(instance)
   if instance == nil then
@@ -12,6 +13,7 @@ function dancing_rect:new(instance)
       height = math.random(10,100),
       health = 1,
       world = nil,
+      type = "dancing_rect",
     }
   end
   instance.id = next_id()
@@ -26,8 +28,10 @@ function dancing_rect:init(world)
 end
 
 function dancing_rect:update()
+  local pos_before = {x=self.pos.x, y=self.pos.y}
   self.pos.x = self.pos.x + math.random(-1,1)
   self.pos.y = self.pos.y + math.random(-1,1)
+  resolve_collisions(self.world, self, pos_before, {'dancing_rect', 'player_bullet', 'enemy_bullet'})
 end
 
 function dancing_rect:draw()

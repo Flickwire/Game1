@@ -1,5 +1,7 @@
 local player = require('src.actors.player')
 local dancing_rect = require('src.actors.dancing_rect')
+local wall = require('src.actors.wall')
+local gamera = require('lib.gamera.gamera')
 
 local world = {}
 
@@ -21,7 +23,12 @@ end
 
 function world:init()
   math.randomseed(os.clock())
-  self.camera = require('lib.gamera.gamera').new(0, 0, self.width, self.height)
+  self.camera = gamera.new(0, 0, self.width, self.height)
+  --level bounds
+  self:add_actor(wall:new({pos={x=-100,y=-100}, width=self.width + 200, height=100}))
+  self:add_actor(wall:new({pos={x=-100,y=self.height}, width=self.width + 200, height=100}))
+  self:add_actor(wall:new({pos={x=-100,y=-100}, width=100, height=self.height + 200}))
+  self:add_actor(wall:new({pos={x=self.width,y=-100}, width=100, height=self.height + 200}))
 end
 
 function world:update(dt)
