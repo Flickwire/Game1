@@ -48,22 +48,23 @@ function magic_bullet:handleCollisions()
   local collisions = find_collisions(self.world, self)
   local did_collision = false
   for _,actor in pairs(collisions) do
-    local skip = false
+    if did_collision then
+      break
+    end
     if actor.id == self.id then
-      skip = true
+      goto continue
     end
     if (self.type == "enemy_bullet" and actor.type == "enemy") then
-      skip = true
+      goto continue
     end
     if (self.type == "player_bullet" and actor.type == "player") then
-      skip = true
+      goto continue
     end
-    if (skip ~= true) then
-      if actor.take_damage then
-        actor:take_damage("magic", 1)
-      end
-      did_collision = true
+    if actor.take_damage then
+      actor:take_damage("magic", 1)
     end
+    did_collision = true
+    ::continue::
   end
   if did_collision then
     self.world:remove_actor(self)
