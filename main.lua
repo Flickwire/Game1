@@ -15,10 +15,12 @@ function love.load()
 
   local dancing_rect = require('src.actors.dancing_rect')
   local player = require('src.actors.player')
+  local wall = require('src.actors.wall')
   for _=1,200 do
-    WORLD:add_actor(dancing_rect:new({pos={x=math.random(0,1000),y=math.random(0,1000)}, width=math.random(10,50), height=math.random(10,50)}))
+    WORLD:add_actor(dancing_rect:new())
   end
   WORLD:add_actor(player:new())
+  WORLD:add_actor(wall:new({pos={x=100,y=100}, width=200, height=200}))
 end
 
 function love.update(dt)

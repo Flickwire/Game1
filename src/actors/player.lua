@@ -1,5 +1,6 @@
 local player = {}
 local next_id = require('src.utils.next_id')
+local resolve_collisions = require('src.utils.resolve_collisions')
 local magic_bullet = require('src.actors.magic_bullet')
 
 function player:new(instance)
@@ -9,11 +10,14 @@ function player:new(instance)
         x = 0,
         y = 0
       },
+      width = 5,
+      height = 5,
       speed = 100,
       pointerDirection = 0,
       pointerDistance = 100,
       shotCooldownTimer = 0,
       shotCooldown = 0.33,
+      type = "player",
     }
   end
   instance.id = next_id()
@@ -33,18 +37,24 @@ function player:update(dt)
 end
 
 function player:handleInput(dt)
+  local speed = self.speed
+  local pos_before = {x=self.pos.x, y=self.pos.y}
+  if love.keyboard.isDown('q') then
+    speed = speed * 20
+  end
   if love.keyboard.isDown('w') then
-    self.pos.y = self.pos.y - self.speed * dt
+    self.pos.y = self.pos.y - speed * dt
   end
   if love.keyboard.isDown('s') then
-    self.pos.y = self.pos.y + self.speed * dt
+    self.pos.y = self.pos.y + speed * dt
   end
   if love.keyboard.isDown('a') then
-    self.pos.x = self.pos.x - self.speed * dt
+    self.pos.x = self.pos.x - speed * dt
   end
   if love.keyboard.isDown('d') then
-    self.pos.x = self.pos.x + self.speed * dt
+    self.pos.x = self.pos.x + speed * dt
   end
+  resolve_collisions(self.world, self, pos_before)
   local mouseX, mouseY = love.mouse.getPosition()
   local screenX, screenY = self.world.camera:toScreen(self.pos.x, self.pos.y)
   local dx = mouseX - screenX
@@ -61,7 +71,7 @@ end
 
 function player:draw()
   love.graphics.setColor(1,0,0,1)
-  love.graphics.rectangle("fill", self.pos.x, self.pos.y, 5, 5)
+  love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.width, self.height)
   local pointerX = self.pos.x + math.cos(self.pointerDirection) * self.pointerDistance
   local pointerY = self.pos.y + math.sin(self.pointerDirection) * self.pointerDistance
   love.graphics.setColor(0,1,0,1)
@@ -84,8 +94,20 @@ function player:fire()
       y = math.sin(self.pointerDirection) * 300
     },
     max_lifetime = 0.5,
+    type = "player_bullet",
+    damage = 10,
+    damage_type = "magic",
   })
   self.world:add_actor(bullet)
+end
+
+function player:getBoundingBox()
+  return {
+    x1 = self.pos.x,
+    y1 = self.pos.y,
+    x2 = self.pos.x + self.width,
+    y2 = self.pos.y + self.height
+  }
 end
 
 function player:destroy()

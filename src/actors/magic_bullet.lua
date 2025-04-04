@@ -1,5 +1,6 @@
 local magic_bullet = {}
 local next_id = require('src.utils.next_id')
+local find_collisions = require('src.utils.find_collisions')
 
 function magic_bullet:new(instance)
   if instance == nil then
@@ -15,6 +16,9 @@ function magic_bullet:new(instance)
       lifetime = 0,
       max_lifetime = 1,
       world = nil,
+      type = "enemy_bullet",
+      damage = 1,
+      damage_type = "magic",
     }
   end
   instance.id = next_id()
@@ -37,6 +41,42 @@ function magic_bullet:update(dt)
   end
   self.pos.x = self.pos.x + self.velocity.x * dt
   self.pos.y = self.pos.y + self.velocity.y * dt
+  self:handleCollisions()
+end
+
+function magic_bullet:handleCollisions()
+  local collisions = find_collisions(self.world, self)
+  local did_collision = false
+  for _,actor in pairs(collisions) do
+    local skip = false
+    if actor.id == self.id then
+      skip = true
+    end
+    if (self.type == "enemy_bullet" and actor.type == "enemy") then
+      skip = true
+    end
+    if (self.type == "player_bullet" and actor.type == "player") then
+      skip = true
+    end
+    if (skip ~= true) then
+      if actor.take_damage then
+        actor:take_damage("magic", 1)
+      end
+      did_collision = true
+    end
+  end
+  if did_collision then
+    self.world:remove_actor(self)
+  end
+end
+
+function magic_bullet:getBoundingBox()
+  return {
+    x1 = self.pos.x - 4,
+    y1 = self.pos.y - 4,
+    x2 = self.pos.x + 4,
+    y2 = self.pos.y + 4
+  }
 end
 
 function magic_bullet:draw()
