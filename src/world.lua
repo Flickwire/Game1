@@ -29,6 +29,15 @@ function world:init()
   self:add_actor(wall:new({pos={x=-100,y=self.height}, width=self.width + 200, height=100}))
   self:add_actor(wall:new({pos={x=-100,y=-100}, width=100, height=self.height + 200}))
   self:add_actor(wall:new({pos={x=self.width,y=-100}, width=100, height=self.height + 200}))
+  --player
+  local player_instance = player:new()
+  player_instance.pos.x = self.width / 2
+  player_instance.pos.y = self.height / 2
+  self:add_actor(player_instance)
+  --dancing rects
+  for _=1,200 do
+    self:add_actor(dancing_rect:new())
+  end
 end
 
 function world:update(dt)
