@@ -19,7 +19,6 @@ function love.load()
 end
 
 function love.update(dt)
-  WORLD:add_actor(require('src.actors.dancing_rect'):new({pos={x=math.random(0,1000),y=math.random(0,1000)}, width=math.random(10,50), height=math.random(10,50)}))
   WORLD:update(dt)
 end
 
