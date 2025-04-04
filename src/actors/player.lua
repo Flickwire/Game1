@@ -1,5 +1,6 @@
 local player = {}
 local next_id = require('src.utils.next_id')
+local magic_bullet = require('src.actors.magic_bullet')
 
 function player:new(instance)
   if instance == nil then
@@ -73,6 +74,18 @@ function player:fire()
   end
   self.shotCooldownTimer = 0
   print(string.format("INFO: Player with ID %s fired a shot", self.id))
+  local bullet = magic_bullet:new({
+    pos = {
+      x = self.pos.x,
+      y = self.pos.y
+    },
+    velocity = {
+      x = math.cos(self.pointerDirection) * 300,
+      y = math.sin(self.pointerDirection) * 300
+    },
+    max_lifetime = 0.5,
+  })
+  self.world:add_actor(bullet)
 end
 
 function player:destroy()
