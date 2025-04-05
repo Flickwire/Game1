@@ -14,6 +14,7 @@ function wall:new(instance)
     }
   end
   instance.id = next_id()
+  instance.type = "wall"
   setmetatable(instance, self)
   self.__index = self
   return instance

@@ -71,7 +71,6 @@ function world:add_actor(actor)
   end
   self.actors[actor.id] = actor
   self.actor_count = self.actor_count + 1
-  print(string.format("INFO: Inserted actor with ID %s", actor.id))
 end
 
 function world:remove_actor(actor)
@@ -88,7 +87,6 @@ function world:remove_actor(actor)
   self.drawables[actor.id] = nil
   self.collidables[actor.id] = nil
   self.actor_count = self.actor_count - 1
-  print(string.format("INFO: Removed actor with ID %s", actor.id))
 end
 
 return world

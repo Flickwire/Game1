@@ -33,7 +33,9 @@ function magic_bullet:new(instance)
   if instance.damage_type == nil then
     instance.damage_type = "magic"
   end
-  instance.type = "magic_bullet"
+  if (instance.type == nil) then
+    instance.type = "magic_bullet"
+  end
   instance.id = next_id()
   setmetatable(instance, self)
   self.__index = self
@@ -43,7 +45,6 @@ end
 function magic_bullet:init(world)
   self.world = world
   self.lifetime = 0
-  print(string.format("INFO: Initializing magic_bullet with ID %s", self.id))
 end
 
 function magic_bullet:update(dt)
@@ -69,6 +70,7 @@ function magic_bullet:handleCollisions()
     if (self.type == "player_bullet" and actor.type == "player") then
       goto continue
     end
+    print(string.format("INFO: %s (%s) collided with %s (%s)", self.type, self.id, actor.type, actor.id))
     if actor.take_damage then
       actor:take_damage("magic", 1)
     end
@@ -93,10 +95,6 @@ end
 function magic_bullet:draw()
   love.graphics.setColor(1, 0.8, 0, 0.8)
   love.graphics.circle("fill", self.pos.x, self.pos.y, 5)
-end
-
-function magic_bullet:destroy()
-  print(string.format("INFO: Destroying magic_bullet with ID %s", self.id))
 end
 
 return magic_bullet
