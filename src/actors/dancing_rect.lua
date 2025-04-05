@@ -6,8 +6,8 @@ function dancing_rect:new(instance)
   if instance == nil then
     instance = {
       pos = {
-        x = math.random(0,1000),
-        y = math.random(0,1000)
+        x = math.random(10,900),
+        y = math.random(10,900)
       },
       width = math.random(10,100),
       height = math.random(10,100),
