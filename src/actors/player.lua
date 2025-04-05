@@ -1,6 +1,7 @@
 local player = {}
 local next_id = require('src.utils.next_id')
 local resolve_collisions = require('src.utils.resolve_collisions')
+local find_collisions = require('src.utils.find_collisions')
 local magic_bullet = require('src.actors.magic_bullet')
 
 function player:new(instance)
@@ -48,14 +49,15 @@ function player:handleInput(dt)
   if love.keyboard.isDown('s') then
     self.pos.y = self.pos.y + speed * dt
   end
-  resolve_collisions(self.world, self, pos_before, {'player_bullet', 'enemy_bullet', 'player'}, 'y')
+  resolve_collisions(self.world, self, pos_before, 'y')
+  pos_before = {x=self.pos.x, y=self.pos.y}
   if love.keyboard.isDown('a') then
     self.pos.x = self.pos.x - speed * dt
   end
   if love.keyboard.isDown('d') then
     self.pos.x = self.pos.x + speed * dt
   end
-  resolve_collisions(self.world, self, pos_before, {'player_bullet', 'enemy_bullet', 'player'}, 'x')
+  resolve_collisions(self.world, self, pos_before, 'x')
   local mouseX, mouseY = love.mouse.getPosition()
   local screenX, screenY = self.world.camera:toScreen(self.pos.x, self.pos.y)
   local dx = mouseX - screenX
@@ -71,7 +73,7 @@ function player:handleInput(dt)
 end
 
 function player:draw()
-  love.graphics.setColor(1,0,0,1)
+  love.graphics.setColor(1,1,1,1)
   love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.width, self.height)
   local pointerX = self.pos.x + math.cos(self.pointerDirection) * self.pointerDistance
   local pointerY = self.pos.y + math.sin(self.pointerDirection) * self.pointerDistance

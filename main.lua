@@ -5,6 +5,7 @@ if arg[2] == "debug" then
 end
 
 WORLD = nil
+require('src.utils.globals')
 
 function love.load()
   if (MODE_DEBUG) then
