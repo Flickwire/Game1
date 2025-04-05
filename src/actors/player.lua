@@ -6,21 +6,22 @@ local magic_bullet = require('src.actors.magic_bullet')
 
 function player:new(instance)
   if instance == nil then
-    instance = {
-      pos = {
-        x = 0,
-        y = 0
-      },
-      width = 5,
-      height = 5,
-      speed = 100,
-      pointerDirection = 0,
-      pointerDistance = 100,
-      shotCooldownTimer = 0,
-      shotCooldown = 0.33,
-      type = "player",
+    instance = {}
+  end
+  if instance.pos == nil then
+    instance.pos = {
+      x = 0,
+      y = 0
     }
   end
+  instance.width = 5
+  instance.height = 5
+  instance.speed = 100
+  instance.type = "player"
+  instance.pointerDirection = 0
+  instance.pointerDistance = 100
+  instance.shotCooldownTimer = 0
+  instance.shotCooldown = 0.33
   instance.id = next_id()
   setmetatable(instance, self)
   self.__index = self

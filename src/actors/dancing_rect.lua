@@ -4,18 +4,24 @@ local resolve_collisions = require('src.utils.resolve_collisions')
 
 function dancing_rect:new(instance)
   if instance == nil then
-    instance = {
-      pos = {
-        x = math.random(10,900),
-        y = math.random(10,900)
-      },
-      width = math.random(10,100),
-      height = math.random(10,100),
-      health = 1,
-      world = nil,
-      type = "dancing_rect",
+    instance = {}
+  end
+  if instance.width == nil then
+    instance.width = math.random(10,100)
+  end
+  if instance.height == nil then
+    instance.height = math.random(10,100)
+  end
+  if instance.pos == nil then
+    instance.pos = {
+      x = math.random(10,900),
+      y = math.random(10,900)
     }
   end
+  if instance.health == nil then
+    instance.health = 1
+  end
+  instance.type = "dancing_rect"
   instance.id = next_id()
   setmetatable(instance, self)
   self.__index = self
