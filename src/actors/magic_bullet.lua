@@ -70,6 +70,9 @@ function magic_bullet:handleCollisions()
     if (self.type == "player_bullet" and actor.type == "player") then
       goto continue
     end
+    if (actor.type == "magic_bullet" or actor.type == "player_bullet") then
+      goto continue
+    end
     print(string.format("INFO: %s (%s) collided with %s (%s)", self.type, self.id, actor.type, actor.id))
     if actor.take_damage then
       actor:take_damage("magic", 1)
