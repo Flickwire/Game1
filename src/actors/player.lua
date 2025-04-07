@@ -40,21 +40,22 @@ end
 function player:handleInput(dt)
   local speed = self.speed
   local pos_before = {x=self.pos.x, y=self.pos.y}
-  if love.keyboard.isDown('q') then
-    speed = speed * 20
+---@diagnostic disable-next-line: param-type-mismatch  -- lshift is not recognised for some reason
+  if love.keyboard.isDown(SETTINGS_MANAGER.settings.keys.go_fast) then
+    speed = speed * 1.4
   end
-  if love.keyboard.isDown('w') then
+  if love.keyboard.isDown(SETTINGS_MANAGER.settings.keys.go_up) then
     self.pos.y = self.pos.y - speed * dt
   end
-  if love.keyboard.isDown('s') then
+  if love.keyboard.isDown(SETTINGS_MANAGER.settings.keys.go_down) then
     self.pos.y = self.pos.y + speed * dt
   end
   resolve_collisions(self.world, self, pos_before, 'y')
   pos_before = {x=self.pos.x, y=self.pos.y}
-  if love.keyboard.isDown('a') then
+  if love.keyboard.isDown(SETTINGS_MANAGER.settings.keys.go_left) then
     self.pos.x = self.pos.x - speed * dt
   end
-  if love.keyboard.isDown('d') then
+  if love.keyboard.isDown(SETTINGS_MANAGER.settings.keys.go_right) then
     self.pos.x = self.pos.x + speed * dt
   end
   resolve_collisions(self.world, self, pos_before, 'x')

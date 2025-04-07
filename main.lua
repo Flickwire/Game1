@@ -5,11 +5,12 @@ if arg[2] == "debug" then
 end
 
 WORLD = nil
+SETTINGS_MANAGER = require('src.utils.settings_manager'):new()
 require('src.utils.globals')
 
 function love.load()
-  local load_settings = require('src.utils.load_settings')
-  load_settings()
+  SETTINGS_MANAGER:load()
+  SETTINGS_MANAGER:apply()
   if (MODE_DEBUG) then
     require("lib.vudu.vudu").initialize()
   end
@@ -23,6 +24,11 @@ end
 
 function love.draw()
   WORLD:draw()
+end
+
+function love.quit()
+  SETTINGS_MANAGER:save()
+  return true
 end
 
 --Error Handler for debug
