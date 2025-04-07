@@ -5,7 +5,7 @@ local function load_settings()
     local settings = json.decode(file)
     if settings then
       if settings.window then
-        love.window.setMode(settings.window.width, settings.window.height, {
+        love.window.updateMode(settings.window.width, settings.window.height, {
           fullscreen = settings.window.fullscreen,
         })
       end
