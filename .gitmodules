@@ -4,3 +4,6 @@
 [submodule "lib/vudu"]
 	path = lib/vudu
 	url = https://github.com/deltadaedalus/vudu.git
+[submodule "lib/json.lua"]
+	path = lib/json
+	url = https://github.com/rxi/json.lua.git

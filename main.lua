@@ -8,6 +8,8 @@ WORLD = nil
 require('src.utils.globals')
 
 function love.load()
+  local load_settings = require('src.utils.load_settings')
+  load_settings()
   if (MODE_DEBUG) then
     require("lib.vudu.vudu").initialize()
   end
